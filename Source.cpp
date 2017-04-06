@@ -1,20 +1,20 @@
 #include <iostream>
-#include <string>
-#include <ctime>
 
-#include "vld.h" /* Visual Leak Detector */
-#include "Truck.h"
+#include <vld.h>
 
-int main() {
-	srand(static_cast<size_t>(time(0)));
-	Queue q1, q2, q3;
-	size_t truck_count = 1;
+#include "Car.h"
+#include "QueueCollection.h"
+
+using namespace MQ;
+
+int main(int argc, char ** argv) {
+	MQStorage mqs(3);
+
+	unsigned int count = 1;
 	do {
-		if (truck_count <= N) splitIntoQueues(new NakladniAuto(truck_count++, rand() % P + 1, rand() % (C2 - C1) + C1 + 1), q1, q2, q3);
-		processQueue(q1, 1);
-		processQueue(q2, 2);
-		processQueue(q3, 3);
-	} while (q1.hasContent() || q2.hasContent() || q3.hasContent());
+		if (count <= Car::N) mqs.generate(count++);
+		mqs.update();
+	} while (mqs.hasContent() || count <= Car::N);
 
 	std::cin.get();
 	return 0;
