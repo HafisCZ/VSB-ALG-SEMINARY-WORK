@@ -125,14 +125,14 @@ namespace MQ
 		Generate new randomized car.
 		@param id Id of new car.
 	*/
-	void MQStorage::generate(unsigned int id) {
+	Car* MQStorage::generate(unsigned int id) {
 		static bool initialized = false;
 		if (!initialized) {
 			srand(static_cast<unsigned int>(time(0)));
 			initialized = true;
 		}
 
-		add(new Car(id, (rand() % (Car::C2 - Car::C1 + 1) + Car::C1), (rand() % Car::P + 1)));
+		return new Car(id, (rand() % (Car::C2 - Car::C1 + 1) + Car::C1), (rand() % Car::P + 1));
 	}
 
 }

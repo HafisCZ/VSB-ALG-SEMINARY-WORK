@@ -30,9 +30,10 @@ namespace MQ
 			MQStorage(unsigned int size);
 			~MQStorage();
 			void add(Car *car);
-			void generate(unsigned int id);
 			void update();
 			const bool hasContent();
+
+			static Car* generate(unsigned int id);
 	};
 
 }

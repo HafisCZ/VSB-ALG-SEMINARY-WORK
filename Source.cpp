@@ -12,7 +12,7 @@ int main(int argc, char ** argv) {
 
 	unsigned int count = 1;
 	do {
-		if (count <= Car::N) mqs.generate(count++);
+		if (count <= Car::N) mqs.add(MQStorage::generate(count++));
 		mqs.update();
 	} while (mqs.hasContent() || count <= Car::N);
 
