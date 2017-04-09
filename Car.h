@@ -1,26 +1,30 @@
 #pragma once
 
-namespace MQ 
-{
-	class Car {
-		friend class MQStorage;
-		public:
-			Car(unsigned int id, int cost, unsigned int count);
-			bool unload();
+class Car {
+	public:
+		//! Constr
+		Car(unsigned int id, int cost, unsigned int count);
+		~Car() { }
 
-			inline const unsigned int getID() const { return _id; }
-			inline const unsigned int getCount() const { return _count; }
-			inline const int getCostPerItem() const { return _cost; }
-			inline const int getTotalCost() const { return (_cost * _count); }
+		//! Ops
+		bool unload();
 
-			static const int C1 = 100;
-			static const int C2 = 1000;
-			static const int N = 50;
-			static const int P = 10;
-			static inline const int getMaxCost() { return P * C2; }
-		private:
-			unsigned int _id, _count;
-			int _cost;
-	};
+		//! Getters
+		inline const unsigned int getID() const { return m_id; }
+		inline const unsigned int getCount() const { return m_itemCount; }
+		inline const int getCostPerItem() const { return m_itemCost; }
+		inline const int getTotalCost() const { return (m_itemCost * m_itemCount); }
 
-}
+		//! Static Getters
+		static const int getMaxCost() { return MAX_P * MAX_C; }
+
+		//! Static Vars
+		static const int MIN_C = 100;	//< C1
+		static const int MAX_C = 1000;	//< C2
+		static const int MIN_P = 1;	
+		static const int MAX_P = 10;	//< P
+	private:
+		//! Vars
+		unsigned int m_id, m_itemCount;
+		int m_itemCost;
+};

@@ -2,38 +2,64 @@
 
 #include "Car.h"
 
-namespace MQ 
-{
-	class MQStorage {
-		private:
-			struct Carry {
-				Carry *_next;
-				Car *_car;
-				Carry(Car *car) : _next(nullptr), _car(car) { }
-				void clear();
-			};
+//! Queue using pair of carry nodes
+class CarryPair {
+	private:
+		//! Carry node to store value
+		class Carry;
+	public:
+		// Constr
+		CarryPair() { }
+		//~CarryPair() { }
 
-			struct CarryPair {
-				Carry *begin;
-				Carry *end;
-				CarryPair() : begin(nullptr), end(nullptr) { }
-				inline const bool hasContent() { return begin != nullptr; }
-				
-				void add(Carry *carry);
-				Car* remove();
-				Car* peek() const;
-			} *_carry;
+		// Ops
+		void add(Car *car);
+		Car* remove();
+		Car* peek() const;
 
-			unsigned int _size;
-			void update(unsigned int queue);
-		public:
-			MQStorage(unsigned int size);
-			~MQStorage();
-			void add(Car *car);
-			void update();
-			const bool hasContent();
+		//! Getters
+		inline const bool hasContent() { return m_begin != nullptr; }
 
-			static Car* generate(unsigned int id);
-	};
+		//! Vars
+		Carry* m_begin = nullptr;
+		Carry* m_end = nullptr;
+};
 
-}
+class CarryPair::Carry {
+	public:
+		// Constr
+		Carry(Car *car) : m_car(car) { }
+		~Carry() { }
+
+		//! Ops
+		void clear();
+
+		//! Vars
+		Carry* m_next = nullptr;
+		Car* m_car = nullptr;
+};
+
+//! Manages and provides access methods for internal queues stored within.
+class MQStorage {
+	public:
+		//! Constr
+		MQStorage(unsigned int size);
+		~MQStorage();
+
+		//! Ops
+		void add(Car* car);
+		void update();
+
+		//! Static Ops
+		static Car* generate(unsigned int id);
+
+		//! Getters
+		const bool hasContent();
+	private:
+		//! Ops
+		void update(unsigned int queue);
+
+		//! Vars
+		CarryPair* m_carry;
+		unsigned int m_size;
+};

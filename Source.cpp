@@ -2,20 +2,19 @@
 
 #include <vld.h>
 
-#include "Car.h"
 #include "QueueCollection.h"
 
-using namespace MQ;
+const int N = 50;		//< N
 
 int main(int argc, char ** argv) {
 	MQStorage mqs(3);
-
+	
 	unsigned int count = 1;
 	do {
-		if (count <= Car::N) mqs.add(MQStorage::generate(count++));
+		if (count <= N) mqs.add(MQStorage::generate(count++));
 		mqs.update();
-	} while (mqs.hasContent() || count <= Car::N);
-
+	} while (mqs.hasContent() || count <= N);
+	
 	std::cin.get();
 	return 0;
 }

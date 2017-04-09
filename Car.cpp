@@ -2,31 +2,27 @@
 
 #include <iostream>
 
-namespace MQ 
+/*!
+	Create new instance of car.
+	@param id Id of new car.
+	@param cost Cost of one item.
+	@param count Amount of items inside.
+*/
+Car::Car(unsigned int id, int cost, unsigned int count) :
+	m_id(id)
 {
-	/*!
-		Create new instance of car.
-		@param id Id of new car.
-		@param cost Cost of one item.
-		@param count Amount of items inside.
-	*/
-	Car::Car(unsigned int id, int cost, unsigned int count) :
-		_id(id)
-	{
-		_count = (count < 1 ? 1 : (count > P ? P : count));
-		_cost = (cost < C1 ? C1 : (cost > C2 ? C2 : cost));
+	m_itemCount = (count < MIN_P ? MIN_P : (count > MAX_P ? MAX_P : count));
+	m_itemCost = (cost < MIN_C ? MIN_C : (cost > MAX_C ? MAX_C : cost));
 
-		std::cout << "G" << _id << "[" << _count << "][" << _cost << "]" << std::endl;
-	}
+	std::cout << "G" << m_id << "[" << m_itemCount << "][" << m_itemCost << "]\n";
+}
 
-	/*!
-		Remove one item from the car.
-		@return True if car still contains some items.
-	*/
-	bool Car::unload() {
-		_count--;
-		std::cout << "V" << _id << "[" << _count << "]" << std::endl;
-		return _count > 0;
-	}
-
+/*!
+	Remove one item from the car.
+	@return True if car still contains some items.
+*/
+bool Car::unload() {
+	m_itemCount--;
+	std::cout << "\t\tV" << m_id << "[" << m_itemCount << "]\n";
+	return m_itemCount > 0;
 }
